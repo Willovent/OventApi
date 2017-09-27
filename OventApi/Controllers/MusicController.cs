@@ -9,7 +9,7 @@ using OventService;
 namespace OventApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Music")]
+    [Route("api/music")]
     public class MusicController : Controller
     {
         public OventBusinessService OventService { get; }

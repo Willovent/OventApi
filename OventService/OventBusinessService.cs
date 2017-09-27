@@ -106,8 +106,8 @@ namespace OventService
             switch (room)
             {
                 case "salon": await apiService.AllumerLaLumiereDuSalonAsync(); break;
-                case "PC": await apiService.AllumerLaLumiereDuPCAsync(); break;
-                case "TV": await apiService.AllumerLaLumiereTVAsync(); break;
+                case "pc": await apiService.AllumerLaLumiereDuPCAsync(); break;
+                case "tv": await apiService.AllumerLaLumiereTVAsync(); break;
             }
         }
 
@@ -116,8 +116,8 @@ namespace OventService
             switch (room)
             {
                 case "salon": await apiService.EteindreLaLumiereDuSalonAsync(); break;
-                case "PC": await apiService.EteindreLaLumiereDuPCAsync(); break;
-                case "TV": await apiService.EteindreLaLumiereTVAsync(); break;
+                case "pc": await apiService.EteindreLaLumiereDuPCAsync(); break;
+                case "tv": await apiService.EteindreLaLumiereTVAsync(); break;
             }
         }
 
@@ -126,8 +126,8 @@ namespace OventService
             switch (room)
             {
                 case "salon": await apiService.OuvrirLesVoletsAsync(); break;
-                case "PC": await apiService.OuvrirVoletPCAsync(); break;
-                case "TV": await apiService.OuvrirVoletTVAsync(); break;
+                case "pc": await apiService.OuvrirVoletPCAsync(); break;
+                case "tv": await apiService.OuvrirVoletTVAsync(); break;
             }
         }
 
@@ -136,8 +136,8 @@ namespace OventService
             switch (room)
             {
                 case "salon": await apiService.FermerLesVoletsAsync(); break;
-                case "PC": await apiService.FermerVoletPCAsync(); break;
-                case "TV": await apiService.FermerVoletsTVAsync(); break;
+                case "pc": await apiService.FermerVoletPCAsync(); break;
+                case "tv": await apiService.FermerVoletsTVAsync(); break;
             }
         }
     }

@@ -9,12 +9,12 @@ using OventService;
 namespace OventApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/light")]
-    public class LightController : Controller
+    [Route("api/store")]
+    public class VoletController : Controller
     {
         public OventBusinessService OventService { get; }
 
-        public LightController(OventBusinessService oventService)
+        public VoletController(OventBusinessService oventService)
         {
             this.OventService = oventService;
         }
@@ -22,7 +22,7 @@ namespace OventApi.Controllers
         [HttpGet("{room}/{state}")]
         public async Task<IActionResult> Get(string room, string state)
         {
-            await OventService.HandleLightsAsync(state, room);
+            await OventService.HandleStoresAsync(state, room);
             return Ok();
         }
 

@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\KodiClientCore\KodiClient.csproj" />
+    <ProjectReference Include="..\KodiClient\KodiClient.csproj" />
   </ItemGroup>
 
 </Project>
