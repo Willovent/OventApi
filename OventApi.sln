@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OventApi", "OventApi\OventApi.csproj", "{12CEDF50-015A-4578-AAD3-8311495F24A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KodiClient", "KodiClientCore\KodiClient.csproj", "{AB308C4B-C4AC-46AF-80BD-8D6DA441419F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KodiClient", "KodiClient\KodiClient.csproj", "{AB308C4B-C4AC-46AF-80BD-8D6DA441419F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OventService", "OventServiceCore\OventService.csproj", "{EC986A46-9DA0-414C-B9D8-ACB5DC749462}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OventService", "OventService\OventService.csproj", "{EC986A46-9DA0-414C-B9D8-ACB5DC749462}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -25,7 +25,13 @@ namespace OventApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddTransient<OventBusinessService>();
+            services.AddTransient((provider) =>
+                 new OventBusinessService(
+                     Configuration["OventServiceConfiguration:zwayApiHost"],
+                     Configuration["OventServiceConfiguration:kodiHost"],
+                     Configuration["OventServiceConfiguration:kodiUserName"],
+                     Configuration["OventServiceConfiguration:KodiPassword"])
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,7 +41,7 @@ namespace OventApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
 
             app.UseMvc();
         }

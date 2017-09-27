@@ -8,9 +8,16 @@ namespace OventService
     /// </summary>
     public class OventBusinessService
     {
-        private OventApiService apiService = new OventApiService("http://home.ovent.net:8083");
 
-        private KodiService kodiBusinessService = new KodiService("libreelec", 80, "Ovent", "P@ssw0rd");
+        public OventBusinessService(string zwayApiHost, string kodiHost, string kodiUserName, string kodiPassword)
+        {
+            this.apiService = new OventApiService(zwayApiHost);
+            this.kodiBusinessService = new KodiService(kodiHost, 80, kodiUserName, kodiPassword);
+        }
+
+        private OventApiService apiService;
+
+        private KodiService kodiBusinessService;
         /// <summary>
         /// Allume ou éteint la télé
         /// </summary>
