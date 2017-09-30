@@ -65,30 +65,26 @@ namespace OventApi.Controllers
         [HttpGet("play/next/{serie}")]
         public async Task<IActionResult> Next(string serie)
         {
-            serie = serie.Replace("de ", String.Empty);
-            try
+            serie = serie.Replace("de ", String.Empty).Replace("d ' ", String.Empty);
+            if (await OventService.PlayNextEpisodeAsync(serie))
             {
-                await OventService.PlayNextEpisodeAsync(serie);
                 return Ok();
-
             }
-            catch
+            else
             {
                 return NotFound();
+
             }
         }
 
         [HttpGet("play/{movie}")]
         public async Task<IActionResult> Movie(string movie)
         {
-            movie = movie.Replace("de ", String.Empty);
-            try
+            if (await OventService.PlayMovie(movie))
             {
-                await OventService.PlayMovie(movie);
                 return Ok();
-
             }
-            catch
+            else
             {
                 return NotFound();
             }

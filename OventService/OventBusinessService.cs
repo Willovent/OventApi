@@ -29,7 +29,7 @@ namespace OventService
         /// Lance le prochain épisode non vue de la série
         /// </summary>
         /// <param name="serieName">Nom de la série, tel que retourné par  @GetSeriesAsync</param>
-        public async Task PlayNextEpisodeAsync(string serieName) => await kodiBusinessService.PlayNextEpisodeAsync(serieName);
+        public async Task<bool> PlayNextEpisodeAsync(string serieName) => await kodiBusinessService.PlayNextEpisodeAsync(serieName);
 
         /// <summary>
         /// Toggle le mute sur Kodi
@@ -71,7 +71,7 @@ namespace OventService
         /// </summary>
         /// <param name="movieName">nom du film, tel que retourné par @GetMoviesAsync</param>
         /// <returns></returns>
-        public async Task PlayMovie(string movieName) => await kodiBusinessService.PlayMovieAsync(movieName);
+        public async Task<bool> PlayMovie(string movieName) => await kodiBusinessService.PlayMovieAsync(movieName);
 
         /// <summary>
         /// Retourne la liste des séries disponible sur le media center

@@ -19,6 +19,7 @@ namespace OventApi
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseApplicationInsights()
                 .UseStartup<Startup>()
                 .UseUrls("http://*:5000")
                 .Build();

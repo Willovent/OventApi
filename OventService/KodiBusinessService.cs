@@ -84,6 +84,7 @@ namespace OventService
             string lowerSerieName = serieName.ToLower();
             var series = await GetSeriesAsync();
             var serie = series.FirstOrDefault(x => x.label.ToLower().Contains(lowerSerieName) || x.title.ToLower().Contains(lowerSerieName));
+            if (serie == null) return false;
             var episode = await kodiClient.VideoLibrary.GetEpisodes(
                 serie.tvshowid,
                 null,
