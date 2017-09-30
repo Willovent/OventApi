@@ -32,6 +32,35 @@ namespace OventService
         public async Task PlayNextEpisodeAsync(string serieName) => await kodiBusinessService.PlayNextEpisodeAsync(serieName);
 
         /// <summary>
+        /// Toggle le mute sur Kodi
+        /// </summary>
+        public async Task MuteKodi() => await kodiBusinessService.Mute();
+
+        /// <summary>
+        /// Met la lecture en pause ou reprend la lecture en cours (toogle)
+        /// </summary>
+        public async Task PauseKodi() => await kodiBusinessService.Pause();
+
+        /// <summary>
+        /// Stop la lecture en cours sur Kodi
+        /// </summary>
+        public async Task StopKodi() => await kodiBusinessService.Stop();
+
+        /// <summary>
+        /// Avance dans le lecture en cours
+        /// </summary>
+        /// <param name="seconds">nombre de secondes à avancer</param>
+        public async Task SeekKodi(int seconds) => await kodiBusinessService.Seek(seconds);
+
+        /// <summary>
+        /// Set le volume de Kodi
+        /// </summary>
+        /// <param name="volume">Volume à set (de 0 à 100)</param>
+        public async Task SetKodiVolumn(int volume) => await kodiBusinessService.Volume(volume);
+
+
+
+        /// <summary>
         /// Retourne la liste des films disponible sur le media center
         /// </summary>
         /// <returns>La liste des films disponible sur le media center</returns>

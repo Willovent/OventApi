@@ -26,6 +26,42 @@ namespace OventApi.Controllers
             return Ok();
         }
 
+        [HttpGet("volume/{volume:int}")]
+        public async Task<IActionResult> Power(int volume)
+        {
+            await OventService.SetKodiVolumn(volume);
+            return Ok();
+        }
+
+        [HttpGet("seek/{seconds:int}")]
+        public async Task<IActionResult> Seek(int seconds)
+        {
+            await OventService.SeekKodi(seconds);
+            return Ok();
+        }
+
+        [HttpGet("mute")]
+        public async Task<IActionResult> Mute()
+        {
+            await OventService.MuteKodi();
+            return Ok();
+        }
+
+        [HttpGet("stop")]
+        public async Task<IActionResult> Stop()
+        {
+            await OventService.StopKodi();
+            return Ok();
+        }
+
+
+        [HttpGet("pause")]
+        public async Task<IActionResult> Pause()
+        {
+            await OventService.PauseKodi();
+            return Ok();
+        }
+
         [HttpGet("play/next/{serie}")]
         public async Task<IActionResult> Next(string serie)
         {

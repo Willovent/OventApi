@@ -1,6 +1,7 @@
 ﻿using KodiRpc;
 using KodiRpc.List;
 using KodiRpc.Video.Fields;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,34 +12,59 @@ namespace OventService
     {
         private Client kodiClient;
 
-        private List<KodiRpc.Video.Details.TVShow> series;
+        private static (DateTime update, List<KodiRpc.Video.Details.TVShow> list) series;
 
-        private List<KodiRpc.Video.Details.Movie> movies;
+        private static (DateTime update,List<KodiRpc.Video.Details.Movie> list) movies;
 
-        public KodiService(string hostname,int port,string username = "", string password ="")
+        public KodiService(string hostname, int port, string username = "", string password = "")
         {
-            kodiClient =  new Client(new ConnectionSettings(hostname, port, username, password), new PlatformServices());
+            kodiClient = new Client(new ConnectionSettings(hostname, port, username, password), new PlatformServices());
+        }
+
+        public async Task<List<KodiRpc.Video.Details.TVShow>> GetSeriesAsync()
+        {
+            if (series.list != null && DateTime.Now - series.update < TimeSpan.FromDays(1))
+            {
+                return series.list;
+            }
+            var response = await kodiClient.VideoLibrary.GetTVShows(new TVShow { TVShowItem.title, TVShowItem.originaltitle, TVShowItem.episodeguide }, new Limits { start = 0, end = 10000 }, new Sort { method = Sort_method.title, ignorearticle = true, order = Sort_order.ascending });
+            series.update = DateTime.Now;
+            return series.list = response.tvshows;
         }
 
         public async Task<List<KodiRpc.Video.Details.Movie>> GetMoviesAsync()
         {
-            if (movies != null)
+            if (movies.list != null && DateTime.Now - movies.update < TimeSpan.FromDays(1))
             {
-                return movies;
+                return movies.list;
             }
             var response = await kodiClient.VideoLibrary.GetMovies(new Movie { MovieItem.title, MovieItem.originaltitle }, new Limits { start = 0, end = 10000 }, new Sort { method = Sort_method.title, ignorearticle = true, order = Sort_order.ascending });
-            return movies = response.movies;
+            movies.update = DateTime.Now;
+            return movies.list = response.movies;
         }
 
-
-        public async Task<List<KodiRpc.Video.Details.TVShow>> GetSeriesAsync()
+        public async Task Pause()
         {
-            if (series != null)
-            {
-                return series;
-            }
-            var response = await kodiClient.VideoLibrary.GetTVShows(new TVShow { TVShowItem.title, TVShowItem.originaltitle, TVShowItem.episodeguide }, new Limits { start = 0, end = 10000 }, new Sort { method = Sort_method.title, ignorearticle = true, order = Sort_order.ascending });
-            return series = response.tvshows;
+            await kodiClient.Player.PlayPause(1);
+        }
+
+        public async Task Stop()
+        {
+            await kodiClient.Player.Stop(1);
+        }
+
+        public async Task Seek(int seconds)
+        {
+            await kodiClient.Player.Seek(1, new KodiRpc.Player.Seek_valueSeconds { seconds = seconds });
+        }
+
+        public async Task Mute()
+        {
+            await kodiClient.Application.SetMute(KodiRpc.Global.Toggle2.toggle);
+        }
+        public async Task Volume(int volume)
+        {
+            await kodiClient.Application.SetVolume(volume);
         }
 
         public async Task<bool> PlayMovieAsync(string movieName)
@@ -75,9 +101,9 @@ namespace OventService
 
         public async Task AllumerLaTeleAsync(bool on)
         {
-            await kodiClient.Addons.ExecuteAddon("script.json-cec", new { command = on?"activate": "standby" });
+            await kodiClient.Addons.ExecuteAddon("script.json-cec", new { command = on ? "activate" : "standby" });
         }
-        
+
     }
 
 
