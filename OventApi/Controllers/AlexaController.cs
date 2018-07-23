@@ -230,7 +230,7 @@ namespace OventApi.Controllers
             }
             else if (requestType == typeof(SessionEndedRequest))
             {
-                return Ok();
+                return Ok(ResponseBuilder.Empty());
             }
             var response = ResponseBuilder.Empty();
             response.Response.ShouldEndSession = false;
