@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace OventApi
 {
@@ -21,7 +15,14 @@ namespace OventApi
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
                 .UseStartup<Startup>()
-                .UseUrls("http://*:5000")
+                .UseKestrel(options =>
+                {
+                    options.Listen(IPAddress.Any, 5001, listenOptions =>
+                      {
+                          listenOptions.UseHttps("https.pfx", "P@ssw0rd");
+                      });
+                    options.Listen(IPAddress.Any, 5000);
+                })
                 .Build();
     }
 }

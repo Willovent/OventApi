@@ -58,6 +58,12 @@ namespace OventService
         /// <param name="volume">Volume à set (de 0 à 100)</param>
         public async Task SetKodiVolumn(int volume) => await kodiBusinessService.Volume(volume);
 
+        /// <summary>
+        /// Récupére les épisodes de série ajoutés Aujourd'hui
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<string>> GetLastAddedSeries() => await kodiBusinessService.GetLastAddedSeries();
+
 
 
         /// <summary>
