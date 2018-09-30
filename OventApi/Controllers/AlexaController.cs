@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Alexa.NET;
+﻿using Alexa.NET;
 using Alexa.NET.Request;
 using Alexa.NET.Request.Type;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Linq;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OventService;
+using System.Threading.Tasks;
 
 namespace OventApi.Controllers
 {
@@ -18,7 +15,7 @@ namespace OventApi.Controllers
     {
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> HandleAlexa([FromBody]SkillRequest request, [FromServices] KodiService kodiService)
+        public async Task<IActionResult> HandleAlexa([FromBody]SkillRequest request, [FromServices] KodiService kodiService, [FromServices]ILogger logger)
         {
             var requestType = request.GetRequestType();
 
@@ -28,11 +25,12 @@ namespace OventApi.Controllers
                 okL.Ssml = "<speak>Ok !</speak>";
                 var responseL = ResponseBuilder.Tell(okL);
                 responseL.Response.ShouldEndSession = false;
-                return Ok(responseL);
+                return this.Ok(responseL);
             }
             else if (requestType == typeof(IntentRequest))
             {
                 var intentRequest = request.Request as IntentRequest;
+                logger.LogInformation($"Received Intent: {intentRequest.Intent.Name} whith Slots : {JsonConvert.SerializeObject(intentRequest.Intent.Slots, Formatting.Indented)}");
                 switch (intentRequest.Intent.Name)
                 {
                     case "PlayerSeekForward":
@@ -60,7 +58,7 @@ namespace OventApi.Controllers
                             notFoundText.Ssml = "<speak>Episode non trouvée</speak>";
                             var notFountResponse = ResponseBuilder.Tell(notFoundText);
                             notFountResponse.Response.ShouldEndSession = false;
-                            return Ok(notFountResponse);
+                            return this.Ok(notFountResponse);
                         }
                         break;
                     case "WatchLatestEpisode":
@@ -70,7 +68,7 @@ namespace OventApi.Controllers
                             notFoundText.Ssml = "<speak>Série non trouvée</speak>";
                             var notFountResponse = ResponseBuilder.Tell(notFoundText);
                             notFountResponse.Response.ShouldEndSession = false;
-                            return Ok(notFountResponse);
+                            return this.Ok(notFountResponse);
                         }
                         break;
                     case "WatchNextEpisode":
@@ -80,7 +78,7 @@ namespace OventApi.Controllers
                             notFoundText.Ssml = "<speak>Série non trouvée</speak>";
                             var notFountResponse = ResponseBuilder.Tell(notFoundText);
                             notFountResponse.Response.ShouldEndSession = false;
-                            return Ok(notFountResponse);
+                            return this.Ok(notFountResponse);
                         }
                         break;
                     case "WatchLastShow":
@@ -93,7 +91,7 @@ namespace OventApi.Controllers
                             notFoundText.Ssml = "<speak>Film non trouvé</speak>";
                             var notFountResponse = ResponseBuilder.Tell(notFoundText);
                             notFountResponse.Response.ShouldEndSession = false;
-                            return Ok(notFountResponse);
+                            return this.Ok(notFountResponse);
                         }
                         break;
                     case "WatchRandomMovie":
@@ -230,11 +228,11 @@ namespace OventApi.Controllers
             }
             else if (requestType == typeof(SessionEndedRequest))
             {
-                return Ok(ResponseBuilder.Empty());
+                return this.Ok(ResponseBuilder.Empty());
             }
             var response = ResponseBuilder.Empty();
             response.Response.ShouldEndSession = false;
-            return Ok(response);
+            return this.Ok(response);
         }
     }
 }

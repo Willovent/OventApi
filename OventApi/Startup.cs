@@ -2,16 +2,14 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OventService;
 
 namespace OventApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
         public IConfiguration Configuration { get; }
 
@@ -21,23 +19,23 @@ namespace OventApi
             services.AddMvc();
             services.AddScoped((provider) =>
                  new OventBusinessService(
-                     Configuration["OventServiceConfiguration:zwayApiHost"],
-                     Configuration["OventServiceConfiguration:kodiHost"],
-                     Configuration["OventServiceConfiguration:kodiUserName"],
-                     Configuration["OventServiceConfiguration:KodiPassword"])
+                     this.Configuration["OventServiceConfiguration:zwayApiHost"],
+                     this.Configuration["OventServiceConfiguration:kodiHost"],
+                     this.Configuration["OventServiceConfiguration:kodiUserName"],
+                     this.Configuration["OventServiceConfiguration:KodiPassword"])
             );
-            services.AddScoped((p) => new KodiService(Configuration["OventServiceConfiguration:kodiHost"],80, Configuration["OventServiceConfiguration:kodiUserName"], Configuration["OventServiceConfiguration:KodiPassword"]));
+            services.AddScoped((p) => new KodiService(this.Configuration["OventServiceConfiguration:kodiHost"], 80, this.Configuration["OventServiceConfiguration:kodiUserName"], this.Configuration["OventServiceConfiguration:KodiPassword"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
+            
+            loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Information);
             app.UseMvc();
         }
     }
