@@ -15,10 +15,10 @@ namespace OventApi.Controllers
     {
         [HttpPost]
         [Route("")]
-        public async Task<IActionResult> HandleAlexa([FromBody]SkillRequest request, [FromServices] KodiService kodiService, [FromServices]ILogger logger)
+        public async Task<IActionResult> HandleAlexa([FromBody]SkillRequest request, [FromServices] KodiService kodiService, [FromServices]ILoggerFactory loggerFactory)
         {
             var requestType = request.GetRequestType();
-
+            var logger = loggerFactory.CreateLogger("Alexa");
             if (requestType == typeof(LaunchRequest))
             {
                 var okL = new Alexa.NET.Response.SsmlOutputSpeech();

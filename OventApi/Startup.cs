@@ -17,6 +17,7 @@ namespace OventApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddLogging();
             services.AddScoped((provider) =>
                  new OventBusinessService(
                      this.Configuration["OventServiceConfiguration:zwayApiHost"],
