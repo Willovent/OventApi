@@ -24,9 +24,9 @@ namespace OventService
 
         private async Task GetAsync(string device, string commande = "on") => await this.Client.GetAsync(ToApiRoute(device, commande));
 
-        public async Task AllumerLaLumiereDuSalonAsync() => await GetAsync("LightScene_12");
+        public async Task AllumerLaLumiereDuSalonAsync() => await GetAsync("Scenes_5");
 
-        public async Task EteindreLaLumiereDuSalonAsync() => await GetAsync("LightScene_17");
+        public async Task EteindreLaLumiereDuSalonAsync() => await GetAsync("Scenes_10");
 
         public async Task AllumerLaLumiereDuPCAsync() => await GetAsync("ZWayVDev_zway_11-0-37");
 
@@ -36,9 +36,9 @@ namespace OventService
 
         public async Task EteindreLaLumiereTVAsync() => await GetAsync("ZWayVDev_zway_2-0-37","off");
 
-        public async Task OuvrirLesVoletsAsync() => await GetAsync("LightScene_14");
+        public async Task OuvrirLesVoletsAsync() => await GetAsync("Scenes_6");
 
-        public async Task FermerLesVoletsAsync() => await GetAsync("LightScene_19");
+        public async Task FermerLesVoletsAsync() => await GetAsync("Scenes_11");
 
         public async Task OuvrirVoletPCAsync() => await GetAsync("ZWayVDev_zway_9-0-37");
 
@@ -48,7 +48,7 @@ namespace OventService
 
         public async Task FermerVoletsTVAsync() => await GetAsync("ZWayVDev_zway_8-0-37", "off");
 
-        public async Task FermeToutAsync() => await GetAsync("LightScene_15");
+        public async Task FermeToutAsync() => await GetAsync("Scenes_8");
 
         public async Task AllumeEteinsLaMusiqueAsync() => await GetAsync("BoseSoundTouchCommand_31");
 
